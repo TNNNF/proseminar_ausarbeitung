@@ -1,0 +1,628 @@
+\documentclass[11pt]{scrartcl}
+
+\usepackage[sexy]{evan}
+
+\usepackage[ngerman]{babel}
+\usepackage{csquotes}
+\MakeOuterQuote{"}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage[left=2cm, right=2cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage[style=numeric-comp]{biblatex}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Quaternions}{\mathbb{H}}
+\newcommand{\rk}{\textrm{rk}}
+\newcommand{\diff}{\textop{\textrm{d}}}
+\newcommand{\image}{\textrm{img}}
+\newcommand{\kernel}{\textrm{ker}}
+\newcommand{\grad}{\textrm{grad}}
+\newcommand{\Rclosure}{\overline{\R}}
+
+\addbibresource{literatur.bib}
+
+\begin{document}
+\begin{titlepage}
+	\centering
+	\Huge
+	\textbf{Proseminar "Topologie" - }\\
+	\vspace*{1cm}
+	\Large
+	\textbf{"Intervalle - Kompaktheit vs. Folgenkompaktheit"}\\
+	\vspace*{2cm}
+	\large
+	\textbf{\today}
+\end{titlepage}
+\section{Einleitung}
+Ein in der Analysis 1 häufig anzutreffender Satz ist die folgende Charakterisierung von kompakten Mengen:
+\begin{theorem}
+	$ K \subseteq \R$ ist genau dann kompakt, wenn $K$ folgenkompakt ist.
+\end{theorem}
+Diese Eigenschaft bleibt auch in abstrakteren Räumen wie euklidischen bzw. unitären, normierten oder metrischen Räumen erhalten. Etwas überraschend mag es nun erscheinen, dass diese Eigenschaft beim Übergang in die nächste Abstraktionsstufe, den topologischen Räumen, nicht mehr erhalten bleibt! Und noch überraschender: im Allgemeinen haben Kompaktheit und Folgenkompaktheit keinerlei Verbindung.\\
+Beispiele zu finden, die diese fehlende Äquivalenz demonstrieren, führt jedoch in sehr abstrakte topologische Räume. Deswegen wird dies in den meisten Grundlagenveranstaltungen ausgelassen. 
+Im Rahmen dieser Arbeit sollen zwei Räume analysiert werden, die aufweisen, dass diese Eigenschaften (ohne Zusatzforderungen) nichts miteinander zu
+tun haben.\\
+Dazu müssen wir uns jedoch in das sehr abstrakte Gefilde der Ordinalzahlen begeben. Da diese in gewisser Weise eine Verallgemeinerung der natürlichen Zahlen sind, sollten wir uns daher
+zuerst daran erinnern, wie die natürlichen Zahlen nach von Neumann definiert sind:
+\begin{align*}
+	0 &:= \emptyset \\
+	1 &:= \{\emptyset\}\\
+	2 &:= \{\emptyset, \{\emptyset\}\}\\
+	\vdots \\
+	n+1 &:= n \cup \{ n\}
+\end{align*}
+Dann ist die Menge aller natürlichen Zahlen definiert als:
+\begin{definition}
+	$\N$ ist die kleinste induktiv definierte Menge, die $0$ enthält, und für jede Zahl auch ihren 
+	Nachfolger enthält.
+\end{definition}
+\noindent Für die topologischen Inhalte habe ich die Ideen aus \citetitle{CEx} ausgearbeitet und teils ergänzt.
+\section{Relationen}
+Relationen spielen eine wichtige Rolle für die Einführung der Ordinalzahlen sowie der Topologie, die wir auf diesen etablieren wollen. Daher werden im Folgenden die wichtigsten Typen von Relationen und Begriffe
+im Umgang mit diesen wiederholt.
+\begin{definition}
+	Sei $X$ eine Menge. Man nennt $R$ eine \underline{Relation} auf $X$, falls $R \subseteq X \times X$ gilt. Dabei bezeichnen wir den Fakt $(x,y)\in R$ auch mit $xRy$ und meinen damit, dass x in Relation zu y steht.
+\end{definition}
+\begin{example}
+	Sehr bekannte Beispiele für Relationen sind die folgenden:
+	\begin{itemize}
+		\item die Gleichheitsrelation auf den reellen Zahlen $\R$
+		\item die Kleiner-Gleich-Relation auf den reellen Zahlen $\R$
+	\end{itemize}
+\end{example}
+Natürlich können in obigem Beispiel auch andere Zahlenbereiche gewählt werden. Hier wird bereits ersichtlich, dass Relationen sich in einigen Eigenschaften gleichen, aber auch in anderen unterscheiden können. So gilt zum Beispiel für alle $x\in\R$, dass $x=x$. Jedoch wird für kein $x\in\R$ gelten, dass $x<x$ gilt. Um solchen Eigenschaften Namen zu geben, definieren wir:
+\begin{definition}
+	Sei $X$ eine Menge und $R$ eine Relation auf X. Dann nennen wir $R$
+	\begin{itemize}
+		\item \underline{reflexiv}, falls $\forall x\in X: xRx$
+		\item \underline{symmetrisch}, falls $\forall x,y\in X: xRy \iff yRx$
+		\item \underline{antisymmetrisch}, falls $\forall x,y\in X: xRy \land yRx \implies x=y$
+		\item \underline{transitiv}, falls $\forall x,y,z\in X: xRy \land yRz\implies xRz$
+		\item \underline{total}, falls $\forall  x,y\in X: xRy \lor x=y \lor yRx$
+	\end{itemize}
+\end{definition}
+\noindent Dies sind die Eigenschaften von Relationen, die wir im Folgenden brauchen werden. Insbesondere sind Relationen interessant, die mehrere dieser Eigenschaften gleichzeitig erfüllen.
+\begin{definition}
+	Sei $X$ eine Menge und R eine Relation auf X. Dann nennen wir R eine 
+	\begin{itemize}
+		\item \underline{Äquivalenzrelation}, falls sie reflexiv, symmetrisch und transitiv ist
+		\item \underline{partielle Ordnung}, falls sie transitiv, reflexiv und antisymmetrisch ist
+		\item \underline{Totalordnung}, falls sie eine partielle Ordnung und zusätzlich noch total ist
+	\end{itemize}
+\end{definition}
+\begin{example}
+	Wir erkennen schnell, dass sich unsere bereits betrachteten Relationen auch in diese Begriffe einordnen lassen:	
+	\begin{itemize}
+		\item Die Gleichheitsrelation auf den reellen Zahlen bildet eine Äquivalenzrelation.
+		\item Die Kleiner-Gleich-Relation auf den reellen Zahlen bildet eine Totalordnung, also insbesondere auch eine partielle Ordnung.
+	\end{itemize}
+\end{example}
+Wenn wir über Ordinalzahlen reden wollen, interessieren wir uns für das Anordnen von Zahlen. Besonders geeignet sind dafür die Totalordnungen. Diese fügen sich sehr gut in unser Verständnis von Ordnungsrelationen ein, da sie alle Eigenschaften haben, die unsere gewohnte Kleiner-Gleich-Relation auch hat. \\
+Jedoch gibt es auch bei dieser Relation noch Unterschiede. Dazu erinnern wir uns an einen Satz der Analysis 1 über die Existenz von minimalen Elementen in den natürlichen Zahlen:
+\begin{lemma} Jede Menge natürlicher Zahlen hat ein minimales Element.
+\end{lemma}
+Auf den reellen Zahlen gilt dies nicht mehr, wie z.B. das offene Intervall $(0,1)$ zeigt. Offensichtlich ist die Existenz von minimalen Elementen besonders schön, weswegen wir diesen Relationen einen besonderen Namen geben wollen:
+\begin{definition}
+	Sei $X$ eine Menge und $R$ eine Totalordnung auf X. Dann nennen wir R eine \underline{Wohlordnung}, falls es für alle $A\subseteq X$ ein $x\in A$ gibt, sodass für alle $y\in A: x\leq y$. Falls $R$ eine Wohlordnung ist, nennen wir $X$ unter $R$ \underline{wohlgeordnet}.
+\end{definition}
+\begin{theorem}
+	Die Menge der natürlichen Zahlen $\N$ ist wohlgeordnet unter der Kleiner-Gleich-Relation $\leq$.
+\end{theorem}
+\begin{proof}
+	Dass $\leq$ eine Totalordnung ist, ist klar. Die Existenz von minimalen Elementen ist Lemma 2.6.
+\end{proof}
+\section{Ordinalzahlen}
+In der Einleitung wurde die Definition der natürlichen Zahlen erwähnt. Eine besonders interessante Eigenschaft, die dort jedoch noch nicht erwähnt wurde, ist die folgende: 
+\begin{lemma}
+	Sei $n\in\N$. Falls $m\in n$, so gilt auch: $m \subseteq n$.
+\end{lemma}
+\begin{proof}
+Wir beweisen die Aussage mittels Induktion. \\
+\underline{Induktionsanfang $n=0$:} Dann ist $n$ bereits die leere Menge und damit folgt die Aussage, da $n$ keine Elemente hat. \\
+\underline{Induktionsvoraussetzung:} Sei die Aussage gültig für alle $k\in\N$, für die gilt $k\leq n$ für ein beliebiges, aber festes $n\in\N$. Also gilt für alle $m \in n$, dass $m \subseteq n$. \\
+\underline{Induktionsschritt:} Sei $m\in n+1$. Da $n+1= n \cup \{ n \}$. Also gilt: $m\in \{ n\}$ oder $m\in n$.\\ Falls $m\in n$, dann folgt mittels der Induktionsvoraussetzung, dass $m \subseteq n$ und per Definition von $n+1$ folgt, dass $n \subseteq n+1$. Somit folgt per Transitivität: $m \subseteq n+1$. \\
+Falls $m\in \{ n\}$, dann gilt: $m=n$. Per Konstruktion des Nachfolgers folgt: $ n \subseteq n+1$. Also: $m \subseteq n+1$.
+\end{proof}
+Diese Eigenschaft erinnert uns ein wenig an die Transitivität einer Relation. Daher definieren wir:
+\begin{definition}
+	Eine Menge M heißt \underline{transitiv}, falls für alle $m\in M$ gilt, dass $m\subseteq M$.
+\end{definition}
+\noindent\textit{Bemerkung:} Diese Eigenschaft wird transitiv genannt, weil sie im Wesentlichen bedeutet, dass die Element-Relation ebenso transitiv wird. Denn sei $m\in M$. Dann gilt für alle $x\in m: x\in M$.\\\phantom{Test}\\ Nun können wir zum bereits lange angekündigten Begriff einer Ordinalzahl kommen:
+\begin{definition}
+	Eine Menge $\alpha$ heißt Ordinalzahl, falls sie transitiv ist und wohlgeordnet unter der folgenden Relation ist: $A \leq B \iff (A = B \lor A \in B$).
+\end{definition}
+\noindent Generische Ordinalzahlen ohne besondere Zusatzeigenschaften werden im Folgenden immer mit kleinen griechischen Buchstaben wie $\alpha, \beta$ oder $\gamma$ abgekürzt.
+\begin{example}Ordinalzahlen sind ein sehr abstrakter Begriff. Um einen besseren Eindruck zu bekommen, sind hier einige Beispiele für Ordinalzahlen:
+	\begin{itemize}
+		\item Jede natürliche Zahl ist eine Ordinalzahl (siehe Lemma 3.1).
+		\item Die Menge aller natürlichen Zahlen $\N$ ist eine Ordinalzahl. Um den "Zahlencharakter" zu betonen, werden wir diese $\omega$ nennen.
+	\end{itemize}
+\end{example}
+Für die topologischen Eigenschaft werden noch zwei wichtige Begriffe benötigt. Dazu wird ab jetzt mit $\alpha '$ immer die folgende Menge bezeichnet: $\alpha' = \alpha \cup \{ \alpha \}$. Diese Zahl heißt Nachfolger und die Idee ist genau wie in der Konstruktion der natürlichen Zahlen.
+\begin{definition}
+Sei $\alpha$ eine Ordinalzahl. Dann nennt man $\alpha$ eine 
+\begin{itemize}
+	\item \underline{Nachfolger-Ordinalzahl}, wenn es eine Ordinalzahl $\beta$ gibt, sodass $\beta'=\alpha$. Also ist hier $\alpha$ der Nachfolger von $\beta$,
+	\item \underline{Limes-Ordinalzahl}, wenn $\alpha$ keine Nachfolger-Ordinalzahl ist.
+\end{itemize}
+\end{definition}
+\noindent Diese Ausarbeitung und der Vortrag sollen sich auf die topologischen Inhalte fokussieren. Daher können Ordinalzahlen leider nicht in der Tiefe vorgestellt werden, wie man das sicherlich tun könnte. Jedoch werden im folgenden Satz die wichtigsten Eigenschaften von Ordinalzahlen vorgestellt. Bevor wir uns allerdings auf den Satz konzentrieren können, benötigen wir eine wichtige Definition:
+\begin{definition}
+	Sei M eine Menge von Mengen. Dann bezeichnen wir als die \underline{Vereinigungsmenge $\bigcup M$} über M als die Menge, die alle Elemente der Elemente von M enthält. Also: $x\in \bigcup M \iff \exists m\in M: x\in m$.
+\end{definition}
+\noindent Nun können wir uns den folgenden wichtigen Satz anschauen:
+\begin{theorem}
+	Sei $\alpha,\beta$ zwei Ordinalzahlen. Dann gelten folgende Eigenschaften.
+	\begin{enumerate}
+		\item Falls $\alpha\neq\emptyset$ gilt: $\emptyset \in \alpha$
+		\item Falls $\alpha \neq \emptyset$ gilt: $\gamma \in \alpha \implies \gamma$ ist eine Ordinalzahl
+		\item $\alpha'= \alpha \cup \{\alpha\}$ ist eine Ordinalzahl
+		\item $\alpha \cap \beta$ ist eine Ordinalzahl
+		\item Sei $M$ eine Menge, in der jedes Element eine Ordinalzahl ist, dann ist auch $\bigcup M$ eine Ordinalzahl.
+		\item Seien $\alpha,\beta$ zwei Ordinalzahlen. Falls $\alpha \subseteq \beta$ und $\alpha \neq \beta$, dann folgt: $\alpha \in \beta$. Insbesondere folgt hier mittels Transitivität: $\alpha < \beta \iff \alpha \subset \beta$.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	\hfill
+	\begin{enumerate}
+		\item Angenommen, $\emptyset \notin \alpha$. Da $\alpha$ wohlgeordnet ist, gibt es ein Element $x\in\alpha$, dass das kleinste Element unter $\leq$ ist. Also gilt für alle $y\in A: x\leq y$. Durch die Transitivität von $\alpha$ folgt: $ x \subseteq \alpha$. Da $\emptyset\notin \alpha$, ist $x\neq \emptyset$. Damit folgt für alle $z\in x: z\in \alpha$. Wähle ein Element $z\in \alpha$. Aufgrund des Fundierungsaxioms folgt: $y\neq x$, da sich Mengen nicht selbst enthalten können. Somit gibt es $z\in \alpha$, für das gilt: $z < x$ (da $z$ ein Element von $x$ ist), was im Widerspruch zur Tatsache steht, dass $x$ das kleinste Element von $\alpha$ war.
+		\item Sei $x\in \alpha$. Wir müssen zwei Dinge zeigen: die Transitivität von $\alpha$ und die Wohlordnung bezüglich der $\leq$-Relation.\\
+			Zuerst die Transitivität: Falls $x\neq \emptyset$: Sei $y\in x$, also: $y\leq x$. Falls $y\neq\emptyset$ (sonst gilt die Teilmengenbeziehung sowieso), wähle $z\in y$, also: $z\leq y$. Dann folgt durch die Transitivität der Relation: $z\leq y\leq x \implies z\leq x$. Der Fall $z=x$ resultiert im Widerspruch zum Fundierungsaxiom. Also: $z\in x \implies y\subseteq x$. Falls $x=\emptyset$, gilt die Eigenschaft, eine Ordinalzahl zu sein sowieso. \\
+			Wohlordnung: Sei $y\leq x$. Falls $y=\emptyset$, folgt die Aussage. Sonst gilt für alle $z\in y$: $z\leq y\leq x\leq \alpha$. Mittels Transitivität folgt: $z\in\alpha$ ($z=\alpha$ führt zum Widerspruch zum Fundierungaxsiom). Also folgt: $y\subseteq \alpha$. Da $\alpha$ eine Ordinalzahl ist, folgt: $y$ hat ein kleinstes Element. Damit ist $x$ eine Ordinalzahl.
+		\item Auch hier muss wieder gezeigt werden, dass $\alpha'$ transitiv und wohlgeordnet unter $\leq$ ist. Auch hier fangen wir wieder mit der Transitivität an. (O.B.d.A. für den ganzen Beweis: alles, was gewählt wird, ist nicht die leere Menge, da dieser Fall trivial ist. Sie würde immer wie in den ovorhergehenden Beweisen abgehandelt werden).\\
+			Transitivität: Sei $x\in\alpha'$. Wir müssen zeigen: $ x \subseteq \alpha'$. Zuerst der Fall, dass $x=\alpha$: Sei $y\in \alpha$. Dann folgt: $y\in\alpha'$, da $ \alpha \subseteq \alpha'$ per Konstruktion. Falls $x\neq \alpha$, folgt: $x\in \alpha$. Da $\alpha$ eine Ordinalzahl und insbesondere transitiv ist, folgt: $ x\subseteq \alpha$. Da $\alpha\in \alpha'$, folgt für alle $y\in x: x\in\alpha'$. Somit: $ x \subseteq \alpha'$. Dies zeigt die Transitivität. \\
+			Wohlordnung: Sei $y\leq \alpha'$. Wir müssen zeigen, dass $y$ ein kleinstes Element hat. Falls $\alpha\notin y$, gilt per Konstruktion: $ y \subseteq \alpha$. Da $\alpha$ eine Ordinalzahl hat, hat y ein minimales Element. Falls $y= \{ \alpha \}$ ist die Ausage klar, da $y$ nur ein Element hat. Sonst gibt es neben $\alpha$ noch weitere Elemente. Betrachte $\tilde y = y\setminus \{\alpha\}$. Dann ist $\tilde y \subseteq \alpha$. Somit hat $\tilde y$ ein kleinstes Element $z\in \tilde y$. Da $z\in \alpha$, folgt: $z\leq \alpha$. Also ist $z$ auch das minimale Element von $\alpha$.
+		\item Falls $\alpha \cap \beta=\alpha$ oder $\alpha \cap \beta =\beta$, so ist die Aussage klar, da $\alpha,\beta$ bereits Ordinalzahlen sind. Also gehen wir davon aus, dass $\alpha \cap \beta \neq \alpha$ und $\alpha \cap \beta \neq \beta$. Dann ist $\alpha \setminus \beta \neq \emptyset$ (denn sonst wäre $\alpha$ eine Teilmenge von $\beta$). Zudem ist $\alpha\setminus\beta$ eine Teilmenge einer Ordinalzahl und hat daher ein kleinstes Element $\gamma\in \alpha$. Es gilt $\alpha \cap \beta = \gamma$, denn: \\
+			"$\subseteq$": Sei $\delta\in \alpha \cap \beta$. Dann ist $\delta \neq \gamma$, da $\gamma \notin \beta$. Zudem gilt wegen $\delta\in \alpha$ auch $\delta \subseteq \alpha$, da $\alpha$ transitiv ist, und analog $ \delta \subseteq \beta$. Daraus folgt auch: $ \delta \subseteq \alpha \cap \beta$. Wäre $\gamma\in \delta$, dann wäre auch $\gamma \in \alpha \cap \beta$. Jedoch ist $\beta$ per Konstruktion kein Element von $\beta$. Also kann $\gamma$ kein Element von $\delta$ sein. Also gilt weder: $\gamma = \delta$ noch $\gamma < \delta$. Da $\gamma, \delta \in \alpha$ und $\alpha$ unter $\leq$ total geordnet ist, folgt also: $\delta \leq \gamma$ und somit auch (wieder da $\delta \neq \gamma$): $\delta \in \gamma$. Somit: $\alpha \cap \beta \subseteq \gamma$.\\
+			"$\supseteq$": Sei $\delta\in \gamma$. Dann ist wegen der Minimalität von $\gamma$ (in der Menge $\alpha \setminus \beta$) also $\delta\notin \alpha \setminus \beta$. Durch die Transitivität von $\alpha$ erhalten wir: $\delta \in \gamma \in \alpha$, also insbesondere $\delta \in \alpha$. Da $\delta \notin \alpha\setminus \beta$, folgt hier bereits: $\delta\in \alpha \cap \beta$. \\
+			Dies zeigt also die Behauptung, dass $\alpha\cap \beta= \gamma$. Insbesondere folgt jetzt also: $\alpha \cap \beta \in \alpha \setminus \beta$. Analog zeigen wir, dass $\alpha \cap \beta \in \beta \setminus \alpha$ gilt. Das kann jedoch nicht gleichzeitig sein. Somit muss $\alpha \cap \beta =\alpha$ oder $\alpha \cap \beta = \beta$. Zusätzlich können wir hier noch eine weitere Eigenschaft beweisen: Wenn $\alpha\cap \beta =\alpha$ ist, gilt: $\alpha \in \beta$, da sonst $\alpha \in \alpha\setminus \beta$ ist, was im Widerspruch zum Fundierungsaxiom besteht. Analog kann man zeigen, dass falls $\alpha \cap \beta = \beta$ erfüllt ist, folgt: $\beta \in \alpha$.
+		\item Da Elemente von Ordinalzahlen wieder Ordinalzahlen sind, ist $\bigcup M$ eine Menge von Ordinalzahlen, da sie alle Elemente der Mengen in $M$ sammelt. Damit ist $\bigcup M$ auch wieder unter $\leq$ wohlgeordnet. Die Eigenschaften einer partiellen Ordnung sind klar. Für die Totalität seien $\alpha, \beta \in \bigcup M$. Falls $\alpha = \beta$ gilt, ist die Aussage klar. Sonst sei o.B.d.A. $ \alpha \subseteq \beta = \alpha$ nach vorherigem Satz. Dann folgt nach der letzten Erkenntnis des Beweises der 4. Eigenschaft, dass $\alpha \in \beta$ ist. Somit folgt die Totalität. Zur Wohlordnung: Sei $ A \subseteq \bigcup M$ nichtleer. Dann gibt es $\beta\in M$, sodass $\beta \cap A \neq \emptyset$ (per Definition der Vereinigungsmenge). Da $\beta$ eine Ordinalzahl ist, hat $\beta \cap A \subseteq \beta$ ein minimales Element $a$. Angenommen dieses Element ist für A nicht minimal. Dann gibt es $b \in A$ mit $b < a$, also $b \in a$. Da $\beta$ transitiv ist, folgt: $ a \subseteq \beta$, also $b \in \beta$. Damit ist $a$ nicht das minimale Element von $\beta$, was ein Widerspruch zur Wahl von $\beta$ war! Damit hat auch $A$ ein minimales Element.\\
+			Zur Transitivität: $\bigcup M$ ist eine Vereinigung von transitiven Mengen. Sei $x \in \bigcup M$. Dann gibt es $\alpha \in M$ mit $x\in \alpha$ (per Definition der Vereinigungsmenge). Da $\alpha$ eine Ordinalzahl ist, folgt $ x \subseteq \alpha$, also gilt für alle $y\in x: y\in \alpha$ und daher auch: $y\in \bigcup M$ per Definition der Vereinigungsmenge. Daher gilt: $ x \subseteq \bigcup M$. Also ist $\bigcup M$ eine Ordinalzahl.
+		\item Falls $\alpha\neq \beta$ und $\alpha\subseteq \beta$, dannf folgt: $\beta\setminus \alpha\neq \emptyset$ (denn sonst wäre $\alpha=\beta$). Sei $\gamma$ das kleinste Element von $\beta-\alpha$.
+			Wir zeigen, dass $\alpha=\gamma$. Sei $\delta\in \gamma$. Dann ist $\delta\in 
+			\alpha$, denn sonst ist $\delta \in \beta-\alpha$ (per Transitivität von $<$). 
+			Somit ist $\delta\in\gamma$ und $\delta\in \beta-\alpha$, was ein Widerspruch is
+			, da $\gamma$ das kleinste Element von $\beta-\alpha$ ist. Sei nun $\delta\in \alpha$.
+			Dann ist $\delta\in \gamma$. Angenommen, $\delta\notin\alpha$. Dann gilt über die
+			Totalität der $\leq$-Relation, dass $\gamma \leq \delta$. Also: $\gamma < \delta$
+			oder $\gamma = \delta$. Beide Fälle resultieren jedoch in: $\gamma\in\alpha$, was
+			per Definition nicht sein kann. Somit: $\alpha=\gamma$. Damit: $\alpha\in\beta$.
+	\end{enumerate}
+\end{proof}
+Insbesondere sichert uns 3.6 3., dass unsere Definition eines Nachfolgers überhaupt wohldefiniert ist.\\
+Die Limes-Ordinalzahlen spielen eine besondere Rolle für die topologischen Räume. Dazu schauen wir uns folgende interessante Charakterisierung von Limes-Ordinalzahlen an:
+\noindent Mit dieser folgt eine wichtige Eigenschaft von Limes-Ordinalzahlen:
+\begin{theorem}
+	Sei $\alpha$ eine Ordinalzahl. Dann sind äquivalent:
+	\begin{enumerate}
+		\item $\alpha$ ist eine Limes-Ordinalzahl.
+		\item $\bigcup \alpha = \alpha$
+	\end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+\begin{itemize}
+	\item["$\impliedby$:"] Wir zeigen die Aussage mittels Kontraposition. Sei also $\alpha$ eine Nachfolger-Ordinalzahl. Dann gibt es eine Ordinalzahl $\beta$ mit $\alpha = \beta \cup \{\beta\}$. Für $\gamma\in \alpha$ gilt also per Konstruktion, dass $\gamma = \beta$ oder $\gamma \in \beta$. In beiden Fällen folgt: $\gamma \subseteq \beta$. Im ersten Fall ist die Aussage klar, im zweiten Fall folgt sie durch die Transitivität von $\beta$, da $\beta$ eine Ordinalzahl ist. Wenn $\delta \in \gamma$ ist, folgt also: $\delta \in \beta$. Somit gilt für alle $x\in \bigcup \alpha$, dass $x\in \beta$. Damit folgt: $\bigcup \alpha \subseteq \beta \nsubseteq \alpha$. Insbesondere folgt also: $\bigcup \alpha \neq \alpha$.
+	\item["$\implies$:"] Sei $\alpha$ eine Limes-Ordinalzahl, zu zeigen: $\bigcup \alpha = \alpha$. Wegen der Transitivität von $\alpha$ folgt: $\bigcup \alpha \subseteq \alpha$, denn: sei $y\in \bigcup \alpha$. Dann gibt es $x\in \alpha$ mit $y\in x$ per Definition der Vereinigungsmenge. Mittels Transitivität folgt nun: $ x \subseteq \alpha$ und damit: $y\in \alpha$. Es verbleibt noch zu zeigen, dass $\alpha \subseteq \bigcup \alpha$. Sei $\beta\in \alpha$. Per Annahme ist $\alpha$ eine Limes-Ordinalzahl und daher insbesondere keine Nachfolger-Ordinalzahl. Also ist $\alpha \neq \beta \cup \{ \beta\}=\beta'$. Da Ordinalzahlen unter $\leq$ total geordnet sind, folgt entweder $\alpha \in \beta'$ oder $\beta' \in \alpha$. Der erste Fall ist nicht möglich. Denn dann würde per Konstruktion des Nachfolgers gelten, dass $\alpha=\beta$ oder $\alpha \in \beta$, was beides im Widerspruch zur Tatsache steht, dass $\beta \in \alpha$. Somit folgt: $\beta' \in \alpha$. Da $\beta\in \beta'$ ist, gilt: $\beta\in \bigcup \alpha$, da $\bigcup\alpha$ alle Elemente von Elementen aus $\alpha$ sammelt. Somit folgt: $\bigcup \alpha = \alpha$.
+\end{itemize}
+\end{proof}
+Wir kennen also bereits eine Limes-Ordinalzahl:
+\begin{example}
+	$\omega =\N$ ist eine Limes-Ordinalzahl.
+\end{example}
+\begin{proof}
+	Wir zeigen dies mittels Gleichheit von Vereinigungsmenge und eigentlicher Menge. \\
+	"$\subseteq$": Sei $n\in \bigcup\N$. Dann gibt es ein $m\in \N$, sodass $n\in m$. Da $m=\{ 0,1,...,m-1 \}$, folgt, dass $n$ eine natürliche Zahl ist. Also $m \in \N$. \\
+	"$\supseteq$": Sei $n \in \N$. Da $n+1 = n \cup \{ n \}$, folgt: $n\in n+1$. Da $n+1$ per Definition eine natürliche Zahl ist, folgt: $n\in \bigcup\N$.
+\end{proof}
+Bis lang haben wir noch nichts über die Existenz verschiedener Ordinalzahlen gesagt. Jedoch benötigen wir ein kleines Lemma für die verschiedenen topologischen Räume:
+\begin{lemma}
+	Es gibt eine überabzählbare Ordinalzahl. Die kleinste überabzählbare Ordinalzahl nennen wir $\Omega$.
+\end{lemma}
+\begin{proof}
+	Sei $M$ die Menge aller abzählbaren Ordinalzahlen. Angenommen $M$ wäre abzählbar, dann ist $M\in M$, was nach dem Fundierungsaxiom nicht möglich ist. Also ist $M$ überabzählbar.
+\end{proof}
+Dies sind die wichtigsten Eigenschaften von Ordinalzahlen im Verlauf dieser Ausarbeitung. Wir werden immer wieder auf diese zurückgreifen, wenn es um topologische Eigenschaften geht. Um jedoch überhaupt über topologische Eigenschaften reden zu können, müssen wir über die Topologie sprechen. Dies geschieht im nächsten Kapitel.
+\section{Ordnungstopologie}
+Die Idee ist, dass wir auf einer Menge von Ordinalzahlen, eine Topologie etablieren, indem wir sie anordnen. Dies wird mit der folgenden Definition geschehen:
+\begin{definition}
+Sei X eine Menge mit einer Totalordnung $<$. Die \underline{Ordnungstopologie auf X} ist die Topologie, die von den offenen Strahlen $\{ x\in X: y < x\}$ und $\{ x\in X: x<y\}$ als Subbasis erzeugte Topologie (Hier werden natürlich die offenen Strahlen aller $x\in X$ betrachtet). Diese Topologie bezeichnen wir von nun an mit $\mathcal T_{<}$.
+\end{definition}
+\noindent \textit{Bemerkung:} Das bedeutet also, dass alle offenen Menge eine beliebige Vereinigung über endliche Schnitte von offenen Strahlen sind. Die offenen Strahlen bezeichnen wir mit $(-\infty,x)$ und $(x,\infty)$ in Anlehnung an unbeschränkte Intervalle auf $\R$.
+\begin{example}
+	Auf den natürlichen Zahlen erhalten wir mit der Relation $x<y \iff x\in y$ folgende Subbasis-Elemente für $n\in\N$: $\{ 0,1,...,n-1\}$ und $\{n+1, n+2,...\}$.
+\end{example}
+Mittels dieser Definition können wir direkt erste kleine Eigenschaften beweisen:
+\begin{lemma}
+Sei $(X, \mathcal T_{<})$ ein topologischer Raum mit der Ordnungstopologie. Dann ist das Intervall $(x,y)=\{ z: x < z, z < y\}$ offen für $x<y$.
+\end{lemma}
+\begin{proof}
+	Seien $x,y\in X$. Dann ist $(x,y)=(-\infty,y)\cap (x,\infty)$. Denn:\\
+	"$\subseteq$": Sei $z\in (x,y)$. Dann gilt: $x < z$ und $z < y$. Also $z\in (x,\infty)$ und $z\in (-\infty,y)$. \\
+	"$\supseteq$": Sei $z\in (-\infty,y)\cap (x,\infty)$. Dann gilt: $z < y$ und $x<z$. Also folgt: $x<z<y\implies z\in (x,y)$.
+\end{proof}
+Mit dieser Erkenntnis können wir die Ordnungstopologie auch noch auf eine andere Art charakterisieren:
+\begin{corollary}
+	Die Ordnungstopologie hat die offenen Intervalle als Basis. Insbesondere sind alle offenen Mengen beliebige Vereinigungen der offenen Intervalle.
+\end{corollary}
+\begin{proof}
+	Dies folgt direkt aus dem vorhergehenden Lemma und der Tatsache, dass der Schnitt über offene Strahlen entweder wieder ein offener Strahl, die leere Menge oder ein Intervall ist. Zusätzlich können offene Strahlen mittels Vereinigung aus Intervallen gebaut werden. 
+\end{proof}
+\begin{definition}
+	Wir definieren die \underline{abgeschlossenen Strahlen} als $(-\infty, y]=\{ x\in X: x < y \lor x = y\}$ und $[y, \infty)=\{ x\in X: x=y \lor y < x\}$. Als \underline{abgeschlossene Intervalle} verstehen wir Mengen der Form: $[x,y]=(-\infty,y]\cap [x,\infty)$.
+\end{definition}
+\noindent \textit{Bemerkung: } Man kann leicht nachprüfen, dass diese Mengen wirklich abgeschlossen sind. Die abgeschlossenen Strahlen sind abgeschlossen, weil sie die Komplemente der offenen Strahlen in die jeweils andere Richtung sind. Zusätzlich sind abgeschlossene Intervalle abgeschlossen, weil sie der Schnitt von zwei abgeschlossenen Mengen sind.
+\begin{definition}
+	Wir nennen die die Ordnungstopologie auf X vollständig, falls jede Menge $ A \subseteq X$ eine kleinste obere Schranke $ \sup(A) \in X$ und eine größte untere Schranke $\inf(A) \in X$ besitzt.
+\end{definition}
+\noindent Mit dieser Definition können wir nun eine Aussage über die Kompaktheit eine Raumes treffen:
+\begin{theorem}
+	Sei $(X, \mathcal T_{<})$ ein topologischer Raum mit der Ordnungstopologie. Dann gilt: Ist $X$ vollständig, so ist $X$ kompakt.
+\end{theorem}
+\textit{Bemerkung:} Der Vollständigkeit halber sei angemerkt, dass die Rückrichtung dieses Satzes auch gilt. Jedoch werden wir im Folgenden nur die Hinrichtung benötigen, weswegen der Beweis ausgelassen wird.
+\begin{proof}
+	Sei $X$ vollständig. Wir wollen zeigen, dass $X$ kompakt ist. Sei dazu also $\mathcal U = (U_i)_{i\in I} \subseteq \mathcal T_{<}$ eine offene Überdeckung von X für eine Indexmenge $I$.
+	Da $X$ vollständig ist, hat $X$ eine kleinste unterste Schranke $\inf(X)$. Sei S die Menge aller $y\in X$, für die sich $[\inf(X), y)$ mit endlich vielen Mengen aus $\mathcal U$ überdecken lässt. 
+	Wir stellen zuerst fest: $S\neq \emptyset$, denn $\inf(X)\in S$, da $[\inf(X), \inf(X))=\emptyset$. 
+	Wir wollen zeigen: $S=X$. Angenommen, diese Gleichheit gilt folgt nämlich die Kompaktheit von X. Denn dann können wir $[\inf(X), \sup(X))$ ($\sup(X)\in X$ existiert aufgrund der Vollständigkeit von X) endlich mit Mengen aus $\mathcal U$ überdecken. 
+	Zusätzlich können wir noch eine offene Menge wählen, die $\sup(X)$ enthält und überdecken somit den ganzen Raum endlich.\\
+	Es gilt also noch diese Gleichheit zu zeigen. Da $S \subseteq X$ und $X$ vollständig ist, hat $S$ eine kleinste oberste Schranke $\sup(S)$ und eine größte untere Schranke $\inf(S)$. Da die Familie 
+	$(U_i)_{i\in I}$ den gesamten Raum überdeckt, gibt es ein $U\in\mathcal U$, sodass gilt: $\sup(S)\in U$. Falls $\sup(X)\neq \sup(S)$, gibt es insbesondere ein $(x,y)\subseteq U$ mit $\sup(S)\in (x,y)$ 
+	(sonst sind die einzigen offenen Mengen, die $\sup(X)$ enthalten die nach rechts offenen Strahlen),
+	da die Intervalle eine Basis der Ordnungstopologie bilden. Dann muss gelten $[x, \sup(S)) \cap S \neq \emptyset$, da sonst $\sup(S)$ nicht die kleinste oberste Schranke gewesen wäre. Wähle $z\in 
+	[x, \sup(S)\cap S$. Dann gibt es für $[\inf(X), z)$ eine endliche Teilüberdeckung $U_1,...,U_n$. Somit gilt jedoch: $(x,y)\subseteq S$, denn: $[\inf(X),y)=[\inf(X),z)\cup [z,y) \subseteq U_1 
+	\cup ... \cup U_n \cup U$. Also: $y\in S$, aber $y> \sup(S)$, was ein Widerspruch ist. Somit ist $\sup(X)=\sup(S)$. \\
+	Wir zeigen nun die Gleichheit der Mengen: $S\subseteq X$ ist sowieso klar. Sei also $x\in X$. Wähle wieder die Menge $U$, für die gilt: $\sup(X)\in U$. Dabei muss gelten: 
+	$(a,\infty)\subseteq U$ für ein bestimmtes $a\in X$, da dies die einzigen offenen Mengen sind die $\sup(X)$ enhalten. Dann gilt: $(a, \infty)\cap S\neq 
+	\emptyset$, da sonst $\sup(X)$ nicht die kleinste obere Schranke gewesen wäre. Sei $z\in (a,\infty) \cap S$. Dann hat $[\inf(X), z)$ eine endliche Überdeckung. Falls $x < z$, gilt die Aussage sofort. 
+	Falls $x> z$, gilt jedoch: $x\in (a,\infty)$, da $a<z\leq x$. Damit kann jedoch wieder U als zusätzliche Menge zu der endlichen Teilüberdeckung von $[\inf(X), z)$ und wir erhalten eine endliche 
+	Teilüberdeckung für $[\inf(X),x)$. Somit gilt für alle $x\in S$. Somit $S=X$ und wie bereits oben gezeigt, folgt die Aussage.
+\end{proof}
+\section{Topologische Eigenschaften der Ordinalzahl-Räume}
+Da wir nun grundlegendes Verständnis im Umgang mit der Ordnungstopologie gewonnen haben, wollen wir diese auf die Ordinalzahl-Räume übertragen. Zuerst definieren wir die folgenden Räume:
+\begin{definition}
+	Sei $\Gamma$ ein Limes-Ordinal. Dann definieren wir:
+	\begin{itemize}
+		\item den \underline{offenen Ordinalzahl-Raum} $[0,\Gamma)$ zusammen mit der Ordnungsrelation $\mathcal T_{<}$,
+		\item den \underline{abgeschlossenen Ordinalzahl-Raum} $[0,\Gamma]$ zusammen mit der Ordnungsrelation $\mathcal T_{<}$.
+	\end{itemize}
+\end{definition}
+\noindent \textit{Bemerkung: } Hier wird mit $<$ immer die bereits etablierte Relation auf Ordinalzahlen gemeint.
+Zwei besondere Fälle dieser Definition sind:
+\begin{definition}
+	Sei $\Omega$ die kleinste überabzählbare Ordinalzahl. Dann definieren wir:
+	\begin{itemize}
+		\item den \underline{überabzählbaren, offenen Ordinalzahl-Raum} als den offenen Ordinalzahl-Raum mit $\Omega$ als Limes-Ordinal
+		\item den \underline{überabzählbaren, abgeschlossenen Ordinalzahl-Raum} als den abgeschlossenen Ordinalzahl-Raum mit $\Omega$ als Limes-Ordinal
+	\end{itemize}
+\end{definition}
+\noindent Mit diesen topologischen Räumen wollen wir uns bis zum Ende des Kapitels beschäftigen. Unsere erste Eigenschaft ist dabei:
+\subsection{Kompaktheit}
+Zuerst wollen wir uns an folgende Begriffe in Bezug auf Kompaktheit erinnern:
+\begin{definition}
+	Sei $(X,\mathcal T)$ ein topologischer Raum. Dann heißt $X$
+	\begin{itemize}
+		\item \underline{kompakt}, falls für jede offene Überdeckung $(U_i)_{i}$ von $X$
+			gilt, dass es eine endliche Teilüberdeckung $U_1,...,U_n$ gibt,
+		\item \underline{abzählbar kompakt}, falls es für jede \textit{abzählbare} offene 
+			Überdeckung $(U_n)_{n\in\mathbb N}$ eine endliche Teilüberdeckung $U_1,...,U_n$
+			gibt
+		\item \underline{folgenkompakt}, wenn jede Folge $(a_n)_{n\in\mathbb N}$ eine konvergente
+			Teilfolge $(a_{n_k})_{k\in\mathbb N}$ hat
+	\end{itemize}
+\end{definition}
+\noindent \textit{Bemerkung:} Es gilt offensichtlich, dass Kompaktheit eine stärkere Eigenschaft als abzählbare Kompaktheit ist.
+\begin{lemma}
+	Jede Teilmenge $A$ von $[0,\Gamma]$ hat ein Supremum, nämlich $\bigcup A$.
+\end{lemma}
+\begin{proof}
+	Wir zeigen zuerst, dass $\bigcup A$ eine obere Schranke ist.
+	Sei $x\in A$. Damit folgt: $ x \subseteq \bigcup A$. Falls $x=\bigcup A$, ist die Aussage klar. Mittels Satz 3.7 6. folgt: $x\in \bigcup A$. Somit ist $\bigcup A$ eine obere Schranke von A.
+	Nun zeigen wir, dass es sich um die kleinste obere Schranke handelt. Sei $s$ eine obere Schranke von A.
+	Wir zeigen: $\bigcup A\leq s$, indem wir beweisen: $\bigcup A \subseteq s$. Sei dazu $a\in \bigcup A$. 
+	Dann gibt es ein $y\in A: a\in y$. Da $s$ eine obere Schranke ist, folgt: $y \leq s$. Also folgt durch
+	die Transitivität: $a\in s$. Damit folgt: $\bigcup A \subseteq s$. Somit: $\bigcup A \leq s$.
+	Damit ist $\bigcup A$ die kleinste obere Schranke.
+\end{proof}
+Damit können wir eine bekannte Eigenschaft aus dem Kapitel über die Ordnungstopologie in den Raum der Ordinalzahlen übertragen:
+\begin{theorem}
+	Der abgeschlossene Ordinalzahl-Raum ist kompakt.
+\end{theorem}
+\begin{proof}
+	Wir wollen Satz 4.7 benutzen. Lemma 5.3 sichert uns bereits zu, dass für $A\subseteq [0,\Gamma]$ immer ein Supremum existiert. Für die kleinsten Elemente können wir sogar eine stärkere Aussage treffen:
+für alle $A\subseteq [0,\Gamma]$ existiert eine kleinstes $\alpha \in A$. Denn jede Menge von
+Ordinalzahlen ist Teilmenge einer Ordinalzahl und damit insbesondere einer wohlgeordneten Menge. Damit besitzt $A$ ein minimales Element.\\
+Also kann Satz 4.7 angewandt werden und es folgt: $[0,\Gamma]$ ist kompakt. Insbesondere ist auch $[0,\Omega]$ kompakt.
+\end{proof}
+Damit folgt auch eine ganze Reihe weiterer Eigenschaften:
+\begin{corollary}
+	Der abgeschlossene Ordinalzahl-Raum ist zudem abzählbar kompakt.
+\end{corollary}
+\begin{proof}
+	Dies ist eine schwächere Bemerkung als die Kompaktheit.
+\end{proof}
+Jedoch können wir eine solche Eigenschaft nicht für den offenen Ordinalzahl-Raum beweisen, denn:
+\begin{theorem}
+	Der offene Ordinalzahl-Raum ist nicht kompakt.
+\end{theorem}
+\begin{proof}
+	Betrachte folgende offene Überdeckung: $\{[0,\alpha): \alpha <\Gamma\}$. Diese hat keine endliche Überdeckung.
+	Angenommen, es gäbe eine endliche Überdeckung $[0,\alpha_1),[0,\alpha_2),...,[0,\alpha_n)$. O.B.d.A: $\alpha_1 <\alpha_2 < ... < \alpha_n$. Also: $[0,\alpha_1)\subseteq [0,\alpha_2)\subseteq ... \subseteq [0,\alpha_n)$.
+	Damit folgt: $\bigcup_{i=1}^n [0,\alpha_i)=[0,\alpha_n)$. Da $\Gamma$ ein Limes-Ordinal ist, 
+	ist $\alpha_n+1$ ebenfalls kleiner als $\Gamma$. (Sonst wäre $\Gamma$ der Nachfolger von $\alpha_n$, was aber natürlich nicht sein kann, da $\Gamma$ ein Limes-Ordinal ist).
+	Somit folgt: $\alpha_n+1 \in [0, \Gamma)$, aber $\alpha_n+1\notin [0,\alpha_n)$. Damit ist $[0,\Gamma)$ nicht kompakt.
+\end{proof}
+Für diesen Raum können wir also nicht direkt alle schwächeren Kompaktheits-Eigenschaften finden. Jedoch gilt trotzdem der folgende Satz:
+\begin{theorem}
+	Der überabzählbare, offene Ordinalraum $[0,\Omega)$ ist abzählbar kompakt.
+\end{theorem}
+Um dies zu zeigen, benötigen wir das folgende Lemma:
+\begin{lemma}
+	Sei $(X,\mathcal T)$ ein topologischer Raum. Dann gilt: jede Folge $(x_n)_{n\in\mathbb N}$ hat einen Häfungspunkt in X $\iff$ $X$ ist abzählbar kompakt.
+\end{lemma}
+\begin{proof}\hfill
+	\begin{itemize}
+		\item["$\implies$":]Sei $\{O_n: n\in\mathbb N\}$ eine abzählbare Überdeckung von $X$. Angenommen $\{O_n: n\in\mathbb N\}$ hat keine endliche Teilüberdeckung. Dann gibt es für alle $n\in\mathbb N$ ein $x_n \in X$, sodass gilt: $x_n\notin \bigcup_{i=1}^n O_n$ (sonst wäre dies eine endliche Teilüberdeckung). Betrachte diese $(x_n)_{n\in\mathbb N}$ als Folge. Diese Folge muss nach Annahme einen Häufungspunkt $x\in X$ haben. Da die $O_n$ eine offene Überdeckung bilden, gibt es ein $k\in\mathbb N$, sodass: $x\in O_k$. Jedoch gilt dann per Konstruktion für $n\geq k$: $x_n\notin O_k$. Damit kann $x$ kein Häufungspunkt gewesen sein, was ein Widerspruch zur Annahme ist. Somit ist $X$ abzählbar kompakt.
+		\item["$\impliedby$":] Sei $(x_n)_{n\in\mathbb N}$ eine Folge in X (wir können annehmen, dass diese Folge abzählbar viele unterschiedliche Folgenglieder hat, sonst müssen unendlich viele gleich sein). 
+			Angenommen, diese Folge hat keinen Häufungspunkt $x\in X$. Dann gibt es für jedes $x\in X$ ein $O_x \in \mathcal T$, sodass $O_x$ nur endlich viele Folgenglieder enthält. 
+			Betrachte jede endliche Teilmgen $F$ des Bildes der Folge und definiere: $$O_F = \bigcup_{x\in X} \{ O_x: O_x \textrm{ enthält genau die Folgenglieder aus F}\}.$$
+			Diese Menge ist offen, da sie ein Vereinigung offener Mengen ist. Da für jeden Punkt gilt, dass es so ein $O_x$ gibt, überdecken die $O_F$ den gesamten Raum. 
+			Da eine abzählbare Menge abzählbar viele endliche Teilmengen hat, bildet $O_F$ eine abzählbare offene Überdeckung. 
+			Da $X$ abzählbar kompakt ist, gibt es bereits endlich viele $O_{F_1},..., O_{F_n}$ den gesamten Raum. 
+			Jedoch schneidet jedes $O_F$ nur endlich viele Folgenglieder und somit gibt es nur endlich viele Folgenglieder, was ein Widerspruch zur Annahme ist.
+	\end{itemize}
+\end{proof}
+\noindent Damit können wir nun die obige Behauptung zeigen, indem wir Lemma 5.9 benutzen:
+\begin{proof}
+	Wir wollen zeigen, dass jede Folge $(\alpha_n)_{n\in\mathbb N} \subseteq [0,\Omega)$ einen 
+	Häufungspunkt in $[0,\Omega)$ hat. Zuerst betrachten wir $(a_n)_{n\in\mathbb N}$ als eine Folge
+	in $[0,\Omega]$. Da $[0,\Omega]$ kompakt ist, ist dieser Raum insbesondere abzählbar kompakt und
+	damit hat $(a_n)_{n\in\mathbb N}$ einen Häufungspunkt in $[0,\Omega]$.\\
+	Wenn wir zeigen können, dass jeder Häufungspunkt der Folge ungleich $\Omega$ ist, sind wir
+	fertig mittels Lemma 5.9. Dazu betrachten wir: $\bigcup_{n\in\mathbb N} \alpha_n = \beta$. Dies
+	ist ebenfalls eine Ordinalzahl. Da zudem für alle $n\in\mathbb N$ gilt, dass $\alpha_n$ 
+	abzählbar ist, ist auch $\beta$ abzählbar als abzählbare Vereinigung abzählbarer Mengen. Damit 
+	gilt: $\beta \in [0, \Omega)$. Zudem gilt: $\alpha_n \subseteq \beta$ und damit: $\alpha_n\leq 
+	\beta$. Es gilt jedoch: $(\beta,\Omega]$ ist eine Umgebung von $\Omega$, in der kein Element von 
+	$(\alpha_n)_{n\in\mathbb N}$ liegt. Damit ist jeder Häufungspunkt von $(\alpha_n)_{n\in\mathbb N}
+	$ ungleich $\Omega$. Also liegt der gesicherte Häufungspunkt in $[0,\Omega)$. Damit ist
+	$[0,\Omega)$ abzählbar kompakt!
+\end{proof}
+\noindent Durch die abzählbare Kompaktheit werden wir mit einer Abzählbarkeitseigenschaft aus dem nächsten Kapitel zudem noch das folgende Ergebnis beweisen können:
+\begin{theorem}
+	Der überabzählbare, offene Ordinalzahl-Raum $[0,\Omega)$ ist folgenkompakt, aber nicht kompakt!
+\end{theorem}
+\textit{Bemerkung:} Dies ist ein mögliches Gegenbeispiel für einen Raum, der folgenkompakt, aber nicht kompakt ist. Die Äquivalenz von Kompaktheit und Folgenkompaktheit gilt also in allgemeinen topologischen Räumen nicht mehr!
+\subsection{Abzählbarkeitseigenschaften}
+Wir wollen uns nun mit den gerade schon angekündigten Abzählbarkeitseigenschaften der Ordinalzahl-Räume
+beschäftigen. Dazu erinnern wir uns zuerst wieder an die wichtigsten Definitionen:
+\begin{definition}
+	Sei $(X,\mathcal T)$  ein topologischer Raum. 
+	Dann heißt $\mathcal B_x \subseteq \mathcal T$ 
+	eine \underline{Umgebungsbasis} eines Punktes $x\in X$, falls folgende Eigenschaften erfüllt
+	sind:
+	\begin{enumerate}
+		\item für alle $V\in \mathcal B_x$ gilt: $x\in V$,
+		\item Jede Umgebung von $x$ enthält ein Element von $\mathcal B_x$.
+	\end{enumerate}
+\end{definition}
+Für Umbegungsbasen und allgemein Basen können wir zwei wichtige Begriffe festhalten:
+\begin{definition}
+	Ein topologischer Raum $(X,\mathcal T)$ erfüllt das \begin{itemize}
+		\item 1. Abzählbarkeitsaxiom, falls jeder Punkt eine abzählbare Umgebungsbasis hat,
+		\item 2. Abzählbarkeitsaxiom, falls $X$ eine abzählbare Basis hat.
+	\end{itemize}
+\end{definition}
+\noindent \textit{Bemerkung:} Anstatt zu sagen, dass $(X,\mathcal T)$ das erste/zweite 
+Abzählbarkeitsaxiom erfüllt, sagt man auch, dass $X$ erst- bzw. zweitabzählbar ist.
+\begin{lemma}
+	Jeder zweitabzählbare topologische Raum ist auch erstabzählbar.
+\end{lemma}
+\begin{proof}
+	Sei $(X,\mathcal T)$ ein zweitabzählbarer Raum. dann gibt es also 
+	eine abzählbare Basis $(B_n)_{n\in\mathbb N}$. Wir zeigen, dass für alle $x\in X$ die Menge
+	$\mathcal B_x:=\{B_n: n\in \mathbb N, x\in B_n\}$ eine Umgebungsbasis bildet. Die Abzählbarkeit und die Offenheit der Elemente
+	dieser Menge ist klar, da $(B_n)_{n\in\mathbb N}$ eine abzählbare Basis ist. Zuerst stellen wir fest, dass $\mathcal B_x\neq\emptyset$ ist,
+	da $\bigcup_{n\in\mathbb N} B_n=X$ ist. Damit muss $x\in B_k$ für ein $k\in\mathbb N$ gelten. Nun prüfen wir also 
+	die Eigenschaften einer Umgebungsbasis:
+	\begin{enumerate}
+		\item per Konstruktion klar
+		\item Sei $V$ eine Umgebung von $x$. Da $V$ eine Umgebung ist, gibt es eine offene
+			Menge $U\in\mathcal T$ mit $x\in U$ und $U\subseteq V$. Da 
+			$(B_n)_{n\in\mathbb N}$ eine Basis der Topologie bildet, ist $U$ eine 
+			Vereinigung von Mengen aus dieser Familie. Insbesondere ist $x\in U$ also
+			muss es ein $B_k$ mit $k\in \mathbb N$ geben, sodass $x\in B_k$ und 
+			$B_k\subseteq U$, da U aus einer Vereinigung über unter anderem $B_k$ entsteht.
+	\end{enumerate}
+	Damit ist $\mathcal B_x$ eine abzählbare Umgebungsbasis.
+\end{proof}
+\begin{theorem}
+	Der abgeschlossene, überabzählbare Ordinalzahl-Raum $[0,\Omega]$ ist nicht erstabzählbar und 
+	damit auch nicht zweitabzählbar.
+\end{theorem}
+\begin{proof}
+	Wie wir später sehen werden, ist $[0,\Omega)$ erstabzählbar. Es muss also am Punkt $\Omega$ scheitern.
+	Angenommen, $\Omega$ hätte eine abzählbare Umgebungsbasis $\mathcal B_\Omega$. Die offenen Mengen, die $\Omega$
+	enthalten, müssen insbesondere ein Intervall der Gestalt $(\alpha, \Omega]$ enthalten, da dies die einzigen 
+	Elemente des Erzeugers sind, die $\Omega$ enthalten. Wir schränken uns daher o.B.d.A. auf diese ein. Damit schreiben
+	wir die Umgebungsbasiselemente als: $(\alpha_1,\Omega],(\alpha_2, \Omega],...$. Definiere: $\alpha = \bigcup_{n\in\mathbb N} \alpha_n$.
+	Diese Menge ist eine abzählbare Ordinalzahl (als abzählbare Vereinigung über abzählbare Ordinalzahlen). Insbesondere ist $(\alpha,\Omega]$ also
+	auch eine Umgebung von $\Omega$. Jedoch gilt: $\alpha_1,\alpha_2,...\leq \alpha$, also: $\alpha_1,\alpha_2,...\notin (\alpha,\Omega]$, was
+	einen Widerspruch darstellt, da $\mathcal B_\Omega$ eine abzählbare Umgebungsbasis war.\\
+	Somit ist $[0,\Omega]$ nicht erstabzählbar.
+\end{proof}
+\begin{theorem}
+	Der offene, überabzählbare Ordinalzahl-Raum $[0,\Omega)$ ist erstabzählbar.
+\end{theorem}
+\begin{proof}
+	Wir müssen also zu jedem Ordinal in $[0,\Omega)$ eine abzählbare Umgebungsbasis konstruieren. Im Wesentlichen müssen wir dabei zwischen zwei
+	Fällen unterscheiden: $\alpha$ ist ein Limes-Ordinal oder $\alpha$ ist kein Limes-Ordinal.\\
+	Fangen wir mit dem leichteren Fall an: Sei $\alpha\in [0,\Omega)$ ein Ordinal, das kein Limes-Ordinal ist. Dann hat $\alpha$ einen Vorgänger $\beta \in [0,\Omega)$,
+	für den gilt: $\beta'=\alpha$. Insbesondere hat auch $\alpha$ wieder einen Nachfolger $\alpha'$. Betrachte das offene Intervall $(\beta,\alpha')=\{x\in[0,\Omega): \beta < x <\alpha'\}
+	= \{\alpha\}$. Damit sind einpunktige Mengen von Nicht-Limes-Ordinalzahlen offen und bilden daher sogar eine endliche Umgebungsbasis. \\
+	Sei nun $\alpha$ ein Limes-Ordinal. Für diese kann der "Vorgäner-Trick" nicht angewandt werden, da Limes-Ordinalzahlen keinen Vorgänger besitzen. Jedoch hat auch $\alpha$ einen Nachfolger
+	$\alpha'$, welchen wir als obere Grenze verwenden können. Da $\alpha < \Omega$ ist und $ \Omega $ die erste überabzählbare Ordinalzahl ist, ist $\alpha$ abzählbar. Definiere die Umgebungsbasis:
+	$\mathcal B_\alpha = \{(\beta, \alpha'): \beta <\alpha\}$. Diese ist abzählbar, denn für alle $\beta < \alpha$ gilt: $\beta \in \alpha$. Wenn wir jedes Element der Umgebungsbasis mit ihren Startpunkten
+	identifizieren, erhalten wir also: $\mathcal B_\alpha \subseteq \alpha$. Damit ist $\mathcal B_\alpha$ abzählbar.\\
+	Zudem ist $\mathcal B_\alpha$ eine Umgebungsbasis. Sei dafür $U$ eine Umgebung von $\alpha$. Da die offenen Intervalle eine Basis der Topologie bilden, enthält diese Menge ein
+	Intervall der Form $(\gamma, \delta)$ mit $\alpha \in (\gamma, \delta)$, also: $\gamma < \alpha < \delta$. Insbesondere gilt, da $\alpha'$ der Nachfolger von $\alpha$ ist, dass
+	$\alpha' \leq \delta$. Somit: $(\gamma, \alpha')\subseteq (\gamma, \delta)$. Zudem gilt: $(\gamma,\alpha')\in \mathcal B_\alpha$. Damit ist $\mathcal B_\alpha$ eine Umgebungsbasis und somit
+	$[0,\Omega)$ erstabzählbar.
+\end{proof}
+Nun können wir den oben bereits erwähnten Zusammenhang zwischen Folgenkompaktheit und abzählbarer 
+Kompaktheit herstellen.
+\begin{theorem}
+	Jeder abzählbar kompakte und erstabzählbare topologische Raum $(X,\mathcal T)$ ist folgenkompakt.
+\end{theorem}
+\begin{proof}
+	Sei $(X,\mathcal T)$ ein erstabzählbarer und abzählbar kompakter topologischer Raum. Zu zeigen ist, dass jede Folge
+	eine konvergente Teilfolge besitzt.\\
+	Sei $(x_n)_{n\in\mathbb N}$ eine Folge in $X$. Da $X$ abzählbar kompakt ist, hat $(x_n)_{n\in\mathbb N}$ einen
+	Häufungspunkt $x\in X$. Da $X$ erstabzählbar ist, gibt es eine abzählbare Umgebungsbasis von $x$, die wir mit $\mathcal B_x$ bezeichnen. Insbesondere
+	können wir diese "durchnummerieren" mittels einer Injektion in die natürlichen Zahlen: $B_1,B_2,B_2,\dots$ Dann definieren wir die
+	folgenden Mengen: $V_n:= \cap_{i=1}^n B_i$. Nach den definierenden Eigenschaften einer Topologie ist für jedes $n\in\mathbb N$ 
+	$V_n$ offen. Zusätzlich gilt die folgende Teilmengenbeziehung: $V_1 \supseteq V_2 \supseteq \dots$. Wähle für alle $k\in\mathbb N$ ein $x_{n_k}$
+	mit $x_{n_k}\in V_k$. Dann konvergiert diese Teilfolge gegen den Häufungspunkt $x$.\\
+	Denn: Sei $U \subseteq X$ eine Umgebung von $x$. Da $\mathcal B_x$ eine Umgebungsbasis ist, gibt es ein $k\in\mathbb N$, sodass $ B_k \subseteq U$. 
+	Insbesondere gilt: $ V_k \subseteq B_k$ per Konstruktion und somit: $x_{n_k}\in V_k$. Da die $V_k$ (im Sinne der Inklusion) eine fallende Folge
+        sind, gilt für alle $k'>k$, dass $x_{n_k'}\in V_{k'} \subseteq V_k$. Somit liegen alle folgenden Folgenglieder in $V_k \subseteq B_k \subseteq U$.
+	Damit konvergiert $(x_{n_k})_{k\in\mathbb N}$ gegen $x$ und ist daher eine konvergente Teilfolge. Also ist $X$ folgenkompakt.
+\end{proof}
+\textit{Bemerkung:} Insbesondere gilt im Fall erstabzählbarer topologischer Räume jetzt also auch: kompakt $\implies$ folgenkompakt.\\
+Damit können wir das bereits angekündigte Resultat beweisen:
+\begin{proof}
+	Die Folgenkompaktheit von $[0, \Omega)$ aus Satz 5.10 ist nun eine Folgerung aus den Sätzen
+	5.8, 5.15 und 5.16.
+\end{proof}
+\noindent Damit haben wir ein Beispiel für einen folgenkompakten Raum kennengelernt, der jedoch nicht kompakt ist.
+So wurde die Äquivalenz dieser beiden in topologischen Räumen bereits widerlegt.
+\section{Das überabzählbare Einheitsintervall}
+Nun haben wir ein Beispiel für einen nicht kompakten Raum gesehen, der jedoch folgenkompakt ist.
+Um nicht den Eindruck aufkommen zu lassen, dass also Kompaktheit die stärkere Eigenschaft ist,
+wollen wir uns nun mit einem topologischen Raum beschäftigen, der kompakt aber nicht folgenkompakt ist.
+\begin{definition}
+	Sei $I=[0,1]$ das Einheitsintervall. Dann nennen wir $$I^I=\prod_{i\in [0,1]}[0,1]=[0,1]^{[0,1]}$$ das 
+	überabzählbare Einheitsintervall. Versehen mit der Produkttopologie für überabzählbare Produkte wird dies zum topologischen
+	Raum des überabzählbaren Einheitsintervalls. Dabei definieren wir diese Topologie als die kleinste Topologie, bezüglich derer alle 
+	Projektionen stetig sind. Dies ist die Topologie, die die Urbilder der Projektionen als Subbasis nimmt.
+\end{definition}
+\subsection{Kompaktheit}
+\noindent Die Kompaktheit dieses Raums folgt aus dem Satz von Tychonoff (aus \cite{Top}):
+\begin{theorem}
+	Sei $(X_i)_{i\in I}$ eine Familie kompakter topologischer Räume. Dann ist der Produktraum 
+	$$\prod_{i\in I} X_i$$ auch kompakt bezüglich der Produkttopologie.
+\end{theorem}
+\textit{Bemerkung:} Die Rückrichtung gilt auch. Der Beweis dieser Richtung ist verhältnismäßig leicht, wenn
+wir uns daran erinnern, dass die Produkttopologie die kleinste Topologie ist bezüglich derer alle Projektionen
+stetig sind und dass stetige Abbildungen kompakte Mengen auf kompakte Mengen abbilden.\\
+Der Beweis der Hinrichtung würde jedoch den Rahmen dieser Ausarbeitung sprengen. Wir wollen uns eher darauf fokussieren,
+warum dieser Raum nicht folgenkompakt ist.\\
+Zuerst erinnern wir uns daran, dass für zwei Mengen $X,Y$ gilt, dass die Menge $X^Y$ die Menge aller Abbildungen $f:X\rightarrow Y$
+ist. Damit sind die Elemente unseres Raumes alle Abbildungen des Einheitsintervalls in das Einheitsintervall. Für Folgenkompaktheit
+müssen wir uns also zuerst damit beschäftigen, wann Folgen in $[0,1]^{[0,1]}$ konvergieren:
+\begin{theorem}
+	Sei $(\alpha_k)_{k\in\mathbb N} \subseteq [0,1]^{[0,1]}$ eine Folgen von Punkten in $[0,1]^{[0,1]}$. Dann gilt:
+	$$\alpha_k \rightarrow \alpha \iff \forall x\in[0,1]: \alpha_k(x)\rightarrow \alpha(x),$$
+	wobei letztere Eigenschaft auch als punktweise Konvergenz ausgedrückt werden kann.
+\end{theorem}
+\begin{proof}
+	Zuerst "$\implies$": Sei $\varepsilon >0$. Dann betrachten wir das offene Intervall $(\alpha(x)-\varepsilon, \alpha(x)+\varepsilon)$. Insbesondere gilt, 
+	dass $U=\pi_{x}^{-1}(\alpha(x)-\varepsilon,\alpha(x)+\varepsilon)$ eine offene Menge in $[0,1]^{[0,1]}$ ist, da Projektionen stetig sind. Da $\alpha_k\rightarrow \alpha$ gilt, folgt, dass 
+	ab einem $k_0\in\N$ gilt, dass $\alpha_k\in U$ ist für alle $k\geq k_0$. Damit folgt, dass gilt: $\alpha_k(x)\in (\alpha(x)-\varepsilon, \alpha(x)+\varepsilon)$ für $k \geq k_0$. 
+	Damit: $\alpha_k(x)\rightarrow \alpha(x)$.\\
+	Nun "$\impliedby$": Sei $U$ eine offene Umgebung von $\alpha_k$. Dann lässt sich $U$ schreiben als endlichen Schnitt über Urbilder von Umgebungen von $\alpha(i)$: $U=\cap_{j=1}^n \pi_j^{-1}(B_j)$, 
+	wobei gelten muss, dass $B_j$ eine Umgebung von $\alpha(j)$ ist. Dann gibt es insbesondere $k_1,...,k_n\in\N$, sodass für alle $k \geq k_j$ gilt, dass $\alpha_k(j) \in B_j$ ist, wobei 
+	$j\in \{1,...,n\}$, da die Funktionen punktweise konvergieren. Setze $k_0=\max\{k_1,...,k_n\}$. Dann gilt für alle $k\geq k_0$ und $j \in \{1,...,n\}$, dass $\alpha_k(j) \in B_j$. Insbesondere
+	gilt auch, dass $\alpha_k \in U$ ist per Konstruktion. Damit liegen unendlich viele Folgenglieder in dieser Menge. Damit: $\alpha_k\rightarrow \alpha$.
+\end{proof}
+\begin{theorem}
+	Das überabzählbare Einheitsintervall ist folgenkompakt.
+\end{theorem}
+\begin{proof}
+	Wir konstruieren nun eine Folge, die keine konvergente Teilfolge hat. Definiere dazu die folgende Folge:
+	$\alpha_n: [0,1]\rightarrow [0,1], x = \sum_{k=1}^\infty c_k 2^{-k} \mapsto c_n$, also jeweils den $n$-ten
+	Koeffizienten in der Binärzahldarstellung, wobei für alle $n\in\N$ gilt, dass $c_n \in \{ 0,1\}$ ist.\\
+	Angenommen, diese Folge hätte eine konvergente Teilfolge $(\alpha_{n_k})_{k\in\mathbb N}$. Dann würde es ein $\alpha:[0,1]\rightarrow[0,1]$
+	geben, sodass $\alpha_{n_k}(x)\rightarrow \alpha(x)$ für $k\rightarrow \infty$ nach Satz 6.3. Insbesondere reden wir hier also über eine reelle Folge
+	in $[0,1]$, deren Konvergenz wir aus Analysis 1 ziemlich gut verstehen.\\
+	Wir konstruieren nun ein $p\in [0,1]$, für die dieser Grenzwert nicht gilt. Auch dazu wird wieder die 2-adische Darstellung verwendet: $$p= \sum_{i=0}^\infty c_i 2^{-i} \textrm{ mit } c_i=\begin{cases}
+		1 & \exists k\in 2\N: i=n_k\\
+		0 & \textrm{sonst}
+	\end{cases}.$$ 
+	Dann gilt: $\alpha_{n_k}(p)= c_{n_k}=\begin{cases}1&2|k\\0&\textrm{sonst}\end{cases}$. Damit gilt: $(\alpha_{n_k}(p))_{k\in\mathbb N}=(0,1,0,1,0,1,...)$. Diese Folge konvergiert nicht. Damit gilt: $\alpha_{n_k}(p)$
+	konvergiert nicht. Also ist $(\alpha_{n_k})_{k\in\mathbb N}$ keine konvergente Teilfolge, was ein Widerspruch zur Annahme ist.
+\end{proof}
+Damit gilt: $[0,1]^{[0,1]}$ ist nicht folgenkompakt. Hiermit haben wir die gewünschten Gegenbeispiele gefunden.
+\subsection{Trennungseigenschaften}
+\textcolor{gray}{
+Falls im Vortrag noch Zeit ist, soll auch noch einmal auf die Trennungseigenschaften des überabzählbaren Einheitsintervalls gesprochen werden. Hier ergibt sich nämlich ein interessanter Zusammenhang
+zwischen Kompaktheit und der Eigenschaft, hausdorff'sch zu sein. Dazu beweisen wir zuerst den folgenden Satz:
+\begin{theorem}
+	Sei $(X_i)_{i\in I}$ eine Familie von Hausdorff-Räumen. Dann ist auch: $\prod_{i\in I} X_i$ hausdorff'sch.
+\end{theorem}
+\begin{proof}
+	Seien $x\neq y \in \prod_{i\in I} X_i$. Zu zeigen ist die Existenz von zwei disjunkten Umgebungen von $x,y$. Da $x,y\in \prod_{i\in I} X_i$ lassen sich $x$ und $y$ schreiben als: $(x_i)_{i\in I}$ und
+	$(y_i)_{i\in I}$. Da $x\neq y$ gilt, gibt es ein $j\in I$ mit $x_j \neq y_j$. Betrachte den zugehörigen Raum $X_j$ mit $x_j, y_j\in X_j$. Da $X_j$ ein Hausdorff-Raum ist, gibt es offene Umgebungen 
+	$x\in U_j, y\in V_j$ von $x$ und $y$ mit $U_j \cap V_j = \emptyset$. Betrachte $U:=\pi_{j}(U_j), V:= \pi_{j}(V_j)$. Bezüglich der Produkttopologie sind Projektionen stetig und damit sind
+	$U,V$ offen in $\prod_{i\in I}X_i$. Zudem gilt: $x\in U, y\in V$. Es gilt jedoch auch: $U\cap V = \emptyset$. Angenommen es gilt: $x\in U\cap V$. Dann gilt: $x\in \pi_{j}^{-1}(U_j)\cap \pi_{j}^{-1}(V_j)$
+	. Also folgt $\pi_j(x)\in U_j$ und $\pi_j(x)\in V_j$, was allerdings nicht sein kann, da $U_j$ und $V_j$ disjunkt sind. Somit haben wir einen Widerspruch und zwei disjunkte Umgebungen gefunden.
+	Damit ist $\prod_{i\in I}X_i$ ein Hausdorff-Raum!
+\end{proof}
+Da $[0,1]$ ein metrischer Raum ist (mit eingeschränkter Metrik von $\R$), ist er insbesondore Hausdorff'sch. Damit folgt direkt:
+\begin{corollary}
+	$[0,1]^{[0,1]}$ ist ein Hausdorff-Raum.
+\end{corollary}
+\begin{proof}
+	Dies ist direkt klar mit der Eigenschaft, dass $[0,1]$ hausdorff'sch ist, und Satz 6.5.
+\end{proof}
+Für die nächsten Satz erinnern wir zuerst an die Definition von Normalität:
+\begin{definition}
+	Sei $(X,\mathcal T)$ ein topologischer Raum. Dann heißt $X$ 
+	\begin{itemize}
+		\item regulär, falls es für jede abgeschlossene Teilmenge $ A \subseteq X$ und einen Punkt $x\in X$ mit $x\notin A$ disjunkte Umgebungen gibt,
+		\item normal, falls es für je zwei disjunkte abgeschlossene Mengen $A,B \subseteq X$ disjukte offene Umgebungen dieser Mengen gibt.
+	\end{itemize}
+\end{definition}
+\noindent In der Tat ergibt sich sogar folgender Zusammenhang für kompakte Hausdorff-Räume (\cite{Top2}):
+\begin{theorem}
+	Sei $X$ ein kompakter Hausdorff-Raum. Dann ist $X$ normal.
+\end{theorem}
+\begin{proof}
+	Die Aussage wird in zwei Schritten bewiesen. Zuerst zeigen wir, dass $X$ regulär ist. Darauf aufbauend leiten wir her, dass $X$ normal ist.\\
+	Angefangen mit der Regularität:
+	Sei $ A \subseteq X$ abgeschlossen (und damit insbesondere auch kompakt, da $X$ kompakt ist) und $x\in X$ mit $x\notin A$. Da $X$ ein Hausdorff-Raum ist, gibt es für alle $a\in A$ Umgebungen 
+	$x\in U_a$ von $x$ und $a\in V_a$ von $a$ mit
+	$U_a \cap V_a =\emptyset$ (Hausdorff-Eigenschaft). O.B.d.A. seien beide diese Mengen offen (sonst schränke auf offene Teilmenge ein). Dann gilt: $ A \subseteq \bigcup_{a\in A} V_a$.
+	Damit haben wir eine offene Überdeckung konstruiert. Für diese finden wir eine endliche Teilüberdeckung. Also gibt es $a_1,...,a_k \in A$ mit $ A \subseteq \bigcup_{i=1}^k V_{a_k}$.
+	Definiere $H=\bigcup_{i=1}^k V_{a_k}$ und als Gegenstück: $G = \bigcap_{i=1}^k U_{a_k}$. Beide sind offen ($H$ als Vereinigung offener Mengen und $G$ als Schnitt endlich vieler offener
+	Mengen). Zudem gilt: $x\in G$, da $x\in U_{a}$ für alle $a\in A$. Es fehlt also noch die Disjunktheit: $ G \cap H \subseteq G \cap (\bigcup_{i=1}^k V_{a_k}) = \bigcup_{i=1}^k (G \cap V_{a_k})=\emptyset$,
+	da für alle $i \in \{1,...,k\}: U_{a_i}\cap V_{a_i} =\emptyset$. Da $G$ als Schnitt über die $U_{a_i}$ entsteht, ist $G\cap V_{a_i} =\emptyset$. Damit ist auch der gesamte Schnitt die leere Menge.\\
+	$\implies X$ ist regulär.\\
+	Nun fehlt noch die Normalität:\\
+	Seien $ A,B \subseteq X$ abgeschlossen und disjunkt. Aufgrund dieser Disjunktheit gilt für alle $a\in A: a\notin B$. Da $X$ regulär ist, gibt es für alle $a\in A$ disjunkte, offene Umgebungen $U_a$ 
+	und $V_a$ von $a$ und $B$. Dabei bildet $(U_a)_{a\in A}$ eine offene Überdeckung ist und $A$ kompakt ist (als abgeschlossene Teilmenge eines kompakten Raums), folgt die Existenz einer endlichen
+	Teilüberdeckung $U_{a_1},...,U_{a_k}$. Definiere: $U= \bigcup_{i=1}^k U_{a_i}$ und $V= \bigcap_{i=1}^k V_{a_i}$. Mit analogem Argument wie oben sind diese Mengen offen und disjunkt. Damit folgt die
+	Normalität.
+\end{proof}
+Daraus können wir jetzt direkt folgenden Schluss herleiten:
+\begin{theorem}
+	$[0,1]^{[0,1]}$ ist normal.
+\end{theorem}
+\begin{proof}
+	Nach 6.6 ist $[0,1]^{[0,1]}$ ein Hausdorff-Raum und nach 6.2 kompakt. Damit folgt mittels 6.8: $[0,1]^{[0,1]}$ ist normal.
+\end{proof}
+}
+\section{Quellen}
+\subsection{Stil-Datei}
+Vielen Dank an Evan Chen\footnote{https://web.evanchen.cc/} für das Bereitstellen seiner \LaTeX-Stil-Datei.
+\subsection{Literatur}
+\printbibliography[heading=none]
+
+\end{document}
