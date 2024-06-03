@@ -50,7 +50,7 @@ Diese Eigenschaft bleibt auch in abstrakteren Räumen wie euklidischen bzw. unit
 Beispiele zu finden, die diese fehlende Äquivalenz demonstrieren, führt jedoch in sehr abstrakte topologische Räume. Deswegen wird dies in den meisten Grundlagenveranstaltungen ausgelassen. 
 Im Rahmen dieser Arbeit sollen zwei Räume analysiert werden, die aufweisen, dass diese Eigenschaften (ohne Zusatzforderungen) nichts miteinander zu
 tun haben.\\
-Dazu müssen wir uns jedoch in das sehr abstrakte Gefilde der Ordinalzahlen begeben. Da diese in gewisser Weise eine Verallgemeinerung der natürlichen Zahlen sind, sollten wir uns daher
+Dazu müssen wir uns jedoch - unter anderem - in das sehr abstrakte Gefilde der Ordinalzahlen begeben. Da diese in gewisser Weise eine Verallgemeinerung der natürlichen Zahlen sind, sollten wir uns daher
 zuerst daran erinnern, wie die natürlichen Zahlen nach von Neumann definiert sind:
 \begin{align*}
 	0 &:= \emptyset \\
@@ -69,7 +69,7 @@ Dann ist die Menge aller natürlichen Zahlen definiert als:
 Relationen spielen eine wichtige Rolle für die Einführung der Ordinalzahlen sowie der Topologie, die wir auf diesen etablieren wollen. Daher werden im Folgenden die wichtigsten Typen von Relationen und Begriffe
 im Umgang mit diesen wiederholt.
 \begin{definition}
-	Sei $X$ eine Menge. Man nennt $R$ eine \underline{Relation} auf $X$, falls $R \subseteq X \times X$ gilt. Dabei bezeichnen wir den Fakt $(x,y)\in R$ auch mit $xRy$ und meinen damit, dass x in Relation zu y steht.
+	Sei $X$ eine Menge. Man nennt $R$ eine \underline{Relation} auf $X$, falls $R \subseteq X \times X$ gilt. Dabei bezeichnen wir den Fakt $(x,y)\in R$ auch mit $xRy$ und meinen damit, dass $x$ in Relation zu $y$ steht.
 \end{definition}
 \begin{example}
 	Sehr bekannte Beispiele für Relationen sind die folgenden:
@@ -80,7 +80,7 @@ im Umgang mit diesen wiederholt.
 \end{example}
 Natürlich können in obigem Beispiel auch andere Zahlenbereiche gewählt werden. Hier wird bereits ersichtlich, dass Relationen sich in einigen Eigenschaften gleichen, aber auch in anderen unterscheiden können. So gilt zum Beispiel für alle $x\in\R$, dass $x=x$. Jedoch wird für kein $x\in\R$ gelten, dass $x<x$ gilt. Um solchen Eigenschaften Namen zu geben, definieren wir:
 \begin{definition}
-	Sei $X$ eine Menge und $R$ eine Relation auf X. Dann nennen wir $R$
+	Sei $X$ eine Menge und $R$ eine Relation auf $X$. Dann nennen wir $R$
 	\begin{itemize}
 		\item \underline{reflexiv}, falls $\forall x\in X: xRx$
 		\item \underline{symmetrisch}, falls $\forall x,y\in X: xRy \iff yRx$
@@ -91,7 +91,7 @@ Natürlich können in obigem Beispiel auch andere Zahlenbereiche gewählt werden
 \end{definition}
 \noindent Dies sind die Eigenschaften von Relationen, die wir im Folgenden brauchen werden. Insbesondere sind Relationen interessant, die mehrere dieser Eigenschaften gleichzeitig erfüllen.
 \begin{definition}
-	Sei $X$ eine Menge und R eine Relation auf X. Dann nennen wir R eine 
+	Sei $X$ eine Menge und $R$ eine Relation auf $X$. Dann nennen wir $R$ eine 
 	\begin{itemize}
 		\item \underline{Äquivalenzrelation}, falls sie reflexiv, symmetrisch und transitiv ist
 		\item \underline{partielle Ordnung}, falls sie transitiv, reflexiv und antisymmetrisch ist
@@ -111,7 +111,7 @@ Jedoch gibt es auch bei dieser Relation noch Unterschiede. Dazu erinnern wir uns
 \end{lemma}
 Auf den reellen Zahlen gilt dies nicht mehr, wie z.B. das offene Intervall $(0,1)$ zeigt. Offensichtlich ist die Existenz von minimalen Elementen besonders schön, weswegen wir diesen Relationen einen besonderen Namen geben wollen:
 \begin{definition}
-	Sei $X$ eine Menge und $R$ eine Totalordnung auf X. Dann nennen wir R eine \underline{Wohlordnung}, falls es für alle $A\subseteq X$ ein $x\in A$ gibt, sodass für alle $y\in A: x\leq y$. Falls $R$ eine Wohlordnung ist, nennen wir $X$ unter $R$ \underline{wohlgeordnet}.
+	Sei $X$ eine Menge und $R$ eine Totalordnung auf $X$. Dann nennen wir $R$ eine \underline{Wohlordnung}, falls es für alle $A\subseteq X$ ein $x\in A$ gibt, sodass für alle $y\in A: x\leq y$. Falls $R$ eine Wohlordnung ist, nennen wir $X$ unter $R$ \underline{wohlgeordnet}.
 \end{definition}
 \begin{theorem}
 	Die Menge der natürlichen Zahlen $\N$ ist wohlgeordnet unter der Kleiner-Gleich-Relation $\leq$.
@@ -133,7 +133,7 @@ Falls $m\in \{ n\}$, dann gilt: $m=n$. Per Konstruktion des Nachfolgers folgt: $
 \end{proof}
 Diese Eigenschaft erinnert uns ein wenig an die Transitivität einer Relation. Daher definieren wir:
 \begin{definition}
-	Eine Menge M heißt \underline{transitiv}, falls für alle $m\in M$ gilt, dass $m\subseteq M$.
+	Eine Menge $M$ heißt \underline{transitiv}, falls für alle $m\in M$ gilt, dass $m\subseteq M$.
 \end{definition}
 \noindent\textit{Bemerkung:} Diese Eigenschaft wird transitiv genannt, weil sie im Wesentlichen bedeutet, dass die Element-Relation ebenso transitiv wird. Denn sei $m\in M$. Dann gilt für alle $x\in m: x\in M$.\\\phantom{Test}\\ Nun können wir zum bereits lange angekündigten Begriff einer Ordinalzahl kommen:
 \begin{definition}
@@ -156,7 +156,7 @@ Sei $\alpha$ eine Ordinalzahl. Dann nennt man $\alpha$ eine
 \end{definition}
 \noindent Diese Ausarbeitung und der Vortrag sollen sich auf die topologischen Inhalte fokussieren. Daher können Ordinalzahlen leider nicht in der Tiefe vorgestellt werden, wie man das sicherlich tun könnte. Jedoch werden im folgenden Satz die wichtigsten Eigenschaften von Ordinalzahlen vorgestellt. Bevor wir uns allerdings auf den Satz konzentrieren können, benötigen wir eine wichtige Definition:
 \begin{definition}
-	Sei M eine Menge von Mengen. Dann bezeichnen wir als die \underline{Vereinigungsmenge $\bigcup M$} über M als die Menge, die alle Elemente der Elemente von M enthält. Also: $x\in \bigcup M \iff \exists m\in M: x\in m$.
+	Sei $M$ eine Menge von Mengen. Dann bezeichnen wir als die \underline{Vereinigungsmenge $\bigcup M$} über M als die Menge, die alle Elemente der Elemente von M enthält. Also: $x\in \bigcup M \iff \exists m\in M: x\in m$.
 \end{definition}
 \noindent Nun können wir uns den folgenden wichtigen Satz anschauen:
 \begin{theorem}
@@ -336,17 +336,17 @@ Damit können wir eine bekannte Eigenschaft aus dem Kapitel über die Ordnungsto
 	Der abgeschlossene Ordinalzahl-Raum ist kompakt.
 \end{theorem}
 \begin{proof}
-	Wir wollen Satz 4.7 benutzen. Lemma 5.3 sichert uns bereits zu, dass für $A\subseteq [0,\Gamma]$ immer ein Supremum existiert. Für die kleinsten Elemente können wir sogar eine stärkere Aussage treffen:
+	Wir wollen Satz 4.7 benutzen. Lemma 5.4 sichert uns bereits zu, dass für $A\subseteq [0,\Gamma]$ immer ein Supremum existiert. Für die kleinsten Elemente können wir sogar eine stärkere Aussage treffen:
 für alle $A\subseteq [0,\Gamma]$ existiert eine kleinstes $\alpha \in A$. Denn jede Menge von
 Ordinalzahlen ist Teilmenge einer Ordinalzahl und damit insbesondere einer wohlgeordneten Menge. Damit besitzt $A$ ein minimales Element.\\
 Also kann Satz 4.7 angewandt werden und es folgt: $[0,\Gamma]$ ist kompakt. Insbesondere ist auch $[0,\Omega]$ kompakt.
 \end{proof}
-Damit folgt auch eine ganze Reihe weiterer Eigenschaften:
+Damit folgt auch eine weitere Eigenschaft direkt:
 \begin{corollary}
 	Der abgeschlossene Ordinalzahl-Raum ist zudem abzählbar kompakt.
 \end{corollary}
 \begin{proof}
-	Dies ist eine schwächere Bemerkung als die Kompaktheit.
+	Dies ist eine schwächere Eigenschaft als Kompaktheit.
 \end{proof}
 Jedoch können wir eine solche Eigenschaft nicht für den offenen Ordinalzahl-Raum beweisen, denn:
 \begin{theorem}
@@ -365,19 +365,29 @@ Für diesen Raum können wir also nicht direkt alle schwächeren Kompaktheits-Ei
 \end{theorem}
 Um dies zu zeigen, benötigen wir das folgende Lemma:
 \begin{lemma}
-	Sei $(X,\mathcal T)$ ein topologischer Raum. Dann gilt: jede Folge $(x_n)_{n\in\mathbb N}$ hat einen Häfungspunkt in X $\iff$ $X$ ist abzählbar kompakt.
+	Sei $(X,\mathcal T)$ ein topologischer Raum. Dann sind folgende Aussagen äquivalent:\begin{enumerate}
+		\item $X$ ist abzählbar kompakt
+		\item jede unendliche Menge $A$ hat einen Häufungspunkt
+		\item jede Folge $(x_n)_{n\in\mathbb N}$ hat einen Häufungspunkt in $X$
+	\end{enumerate}
 \end{lemma}
-\begin{proof}\hfill
-	\begin{itemize}
-		\item["$\implies$":]Sei $\{O_n: n\in\mathbb N\}$ eine abzählbare Überdeckung von $X$. Angenommen $\{O_n: n\in\mathbb N\}$ hat keine endliche Teilüberdeckung. Dann gibt es für alle $n\in\mathbb N$ ein $x_n \in X$, sodass gilt: $x_n\notin \bigcup_{i=1}^n O_n$ (sonst wäre dies eine endliche Teilüberdeckung). Betrachte diese $(x_n)_{n\in\mathbb N}$ als Folge. Diese Folge muss nach Annahme einen Häufungspunkt $x\in X$ haben. Da die $O_n$ eine offene Überdeckung bilden, gibt es ein $k\in\mathbb N$, sodass: $x\in O_k$. Jedoch gilt dann per Konstruktion für $n\geq k$: $x_n\notin O_k$. Damit kann $x$ kein Häufungspunkt gewesen sein, was ein Widerspruch zur Annahme ist. Somit ist $X$ abzählbar kompakt.
-		\item["$\impliedby$":] Sei $(x_n)_{n\in\mathbb N}$ eine Folge in X (wir können annehmen, dass diese Folge abzählbar viele unterschiedliche Folgenglieder hat, sonst müssen unendlich viele gleich sein). 
-			Angenommen, diese Folge hat keinen Häufungspunkt $x\in X$. Dann gibt es für jedes $x\in X$ ein $O_x \in \mathcal T$, sodass $O_x$ nur endlich viele Folgenglieder enthält. 
-			Betrachte jede endliche Teilmgen $F$ des Bildes der Folge und definiere: $$O_F = \bigcup_{x\in X} \{ O_x: O_x \textrm{ enthält genau die Folgenglieder aus F}\}.$$
-			Diese Menge ist offen, da sie ein Vereinigung offener Mengen ist. Da für jeden Punkt gilt, dass es so ein $O_x$ gibt, überdecken die $O_F$ den gesamten Raum. 
-			Da eine abzählbare Menge abzählbar viele endliche Teilmengen hat, bildet $O_F$ eine abzählbare offene Überdeckung. 
-			Da $X$ abzählbar kompakt ist, gibt es bereits endlich viele $O_{F_1},..., O_{F_n}$ den gesamten Raum. 
-			Jedoch schneidet jedes $O_F$ nur endlich viele Folgenglieder und somit gibt es nur endlich viele Folgenglieder, was ein Widerspruch zur Annahme ist.
-	\end{itemize}
+\begin{proof}
+	Zuerst 3.$\implies$ 1.: Sei $\{O_n: n\in\mathbb N\}$ eine abzählbare Überdeckung von $X$. Angenommen $\{O_n: n\in\mathbb N\}$ hat keine endliche Teilüberdeckung. 
+	Dann gibt es für alle $n\in\mathbb N$ ein $x_n \in X$, sodass gilt: $x_n\notin \bigcup_{i=1}^n O_n$ (sonst wäre dies eine endliche Teilüberdeckung). Betrachte diese $(x_n)_{n\in\mathbb N}$ als Folge. 
+	Diese Folge muss nach Annahme einen Häufungspunkt $x\in X$ haben. Da die $O_n$ eine offene Überdeckung bilden, gibt es ein $k\in\mathbb N$, sodass: $x\in O_k$. 
+	Jedoch gilt dann per Konstruktion für $n\geq k$: $x_n\notin O_k$. Damit kann $x$ kein Häufungspunkt gewesen sein, was ein Widerspruch zur Annahme ist. Somit ist $X$ abzählbar kompakt.\\
+	Nun 1.$\implies$ 2.: Sei $X$ abzählbar kompakt und $A$ eine unendliche Teilmenge. O.E. ist $A$ abzählbar (sonst wähle eine abzählbare Teilmenge). Angenommen, diese Menge hat keinen Häufungspunkt. 
+	Dann gibt es für alle $x\in X$ eine offene Menge $O_x$, sodass $O_x \cap A$ eine endliche Menge ist. Betrachte jede endliche Teilmenge $F$ von $S$ (von diesen gibt es abzählbar viele) und
+	definiere: $O_F = \bigcup \{ O_x : O_x \cap S = F\}$. Diese sind offen als Vereinigung offener Mengen und sie sie überdecken den gesamten Raum, denn alle $x$ kommen in einem $O_x$ vor. Dieses hat 
+	einen endlichen Schnitt mit $S$, also gilt: $O_x \cap S = F'$ für eine endliche Menge $F'$ und damit: $x\in O_x \subseteq F'$. Damit haben wir eine abzählbare Überdeckung gebaut. Nach Annahme
+	gibt es jetzt eine endliche Teilüberdeckung $O_{F_1},..., O_{F_n}$. Damit gilt also: $A \subseteq O_{F_1} \cup ... \cup O_{F_n} \implies A$ ist endlich. Dies ist ein Widerspruch zur Annahme, dass $A$
+	unedlich groß ist und diese Richtung ist bewiesen.\\
+	Es fehlt noch: 2. $\implies$ 3. Sei $(x_n)_{n\in\mathbb N}$ eine Folge. Falls diese nur endlich viele Folgenglieder annimmt, dann muss es ein Folgenwert von unendlich vielen $n\in\mathbb N$ angenommen
+	werden und daher ist dieser ein Häufungspunkt. Daher können wir annehmen, dass die Folge unendlich viele Folgenglieder annimmt. Betrachte: $x(\mathbb N)$ (also das Bild der Folge). Diese ist 
+	jetzt eine abzählbar unendliche Menge. Nach Annahme hat diese einen Häufungspunkt $x\in X$. Wir wollen zeigen, dass $x$ auch ein Häufungspunkt der Folge $(x_n)_{n\in\mathbb N}$ ist. Sei dazu $U \in
+	\mathcal T$ eine Umgebung von $x$. Da dieses $x$ ein Häufungspunkt von $x(\mathbb N)$ ist, gilt: $x(\mathbb N) \cap U$ enthält unendlich viele Elemente. Für jedes $y \in x(\mathbb N)$ gibt es ein
+	$k\in\mathbb N$, sodass $y=x_k$. Damit gibt es unendlich viele Folgenglieder, die in $U$ liegen. Damit ist $x$ ein Häufungspunkt von $(x_n)_{n\in\mathbb N}$.\\
+	Damit ist die Aussage gezeigt.
 \end{proof}
 \noindent Damit können wir nun die obige Behauptung zeigen, indem wir Lemma 5.9 benutzen:
 \begin{proof}
@@ -455,7 +465,7 @@ Abzählbarkeitsaxiom erfüllt, sagt man auch, dass $X$ erst- bzw. zweitabzählba
 	wir die Umgebungsbasiselemente als: $(\alpha_1,\Omega],(\alpha_2, \Omega],...$. Definiere: $\alpha = \bigcup_{n\in\mathbb N} \alpha_n$.
 	Diese Menge ist eine abzählbare Ordinalzahl (als abzählbare Vereinigung über abzählbare Ordinalzahlen). Insbesondere ist $(\alpha,\Omega]$ also
 	auch eine Umgebung von $\Omega$. Jedoch gilt: $\alpha_1,\alpha_2,...\leq \alpha$, also: $\alpha_1,\alpha_2,...\notin (\alpha,\Omega]$, was
-	einen Widerspruch darstellt, da $\mathcal B_\Omega$ eine abzählbare Umgebungsbasis war.\\
+	einen Widerspruch darstellt, da $\mathcal B_\Omega$ eine Umgebungsbasis war.\\
 	Somit ist $[0,\Omega]$ nicht erstabzählbar.
 \end{proof}
 \begin{theorem}
@@ -498,8 +508,8 @@ Kompaktheit herstellen.
 \textit{Bemerkung:} Insbesondere gilt im Fall erstabzählbarer topologischer Räume jetzt also auch: kompakt $\implies$ folgenkompakt.\\
 Damit können wir das bereits angekündigte Resultat beweisen:
 \begin{proof}
-	Die Folgenkompaktheit von $[0, \Omega)$ aus Satz 5.10 ist nun eine Folgerung aus den Sätzen
-	5.8, 5.15 und 5.16.
+	Die Folgenkompaktheit von $[0, \Omega)$ aus Satz 5.11 ist nun eine Folgerung aus den Sätzen
+	5.8, 5.16 und 5.17.
 \end{proof}
 \noindent Damit haben wir ein Beispiel für einen folgenkompakten Raum kennengelernt, der jedoch nicht kompakt ist.
 So wurde die Äquivalenz dieser beiden in topologischen Räumen bereits widerlegt.
@@ -534,16 +544,20 @@ müssen wir uns also zuerst damit beschäftigen, wann Folgen in $[0,1]^{[0,1]}$ 
 \end{theorem}
 \begin{proof}
 	Zuerst "$\implies$": Sei $\varepsilon >0$. Dann betrachten wir das offene Intervall $(\alpha(x)-\varepsilon, \alpha(x)+\varepsilon)$. Insbesondere gilt, 
-	dass $U=\pi_{x}^{-1}(\alpha(x)-\varepsilon,\alpha(x)+\varepsilon)$ eine offene Menge in $[0,1]^{[0,1]}$ ist, da Projektionen stetig sind. Da $\alpha_k\rightarrow \alpha$ gilt, folgt, dass 
+	dass $U=\pi_{x}^{-1}(\alpha(x)-\varepsilon,\alpha(x)+\varepsilon)$ eine offene Menge in $[0,1]^{[0,1]}$ ist, da Projektionen stetig sind. Zudem ist $U$ wirklich eine Umgebung von $\alpha$, 
+	denn $\alpha\in U$, da $\pi_x(\alpha)=\alpha(x)\in (\alpha(x)-\varepsilon,\alpha(x)+\varepsilon)$.
+	Da $\alpha_k\rightarrow \alpha$ gilt, folgt, dass 
 	ab einem $k_0\in\N$ gilt, dass $\alpha_k\in U$ ist für alle $k\geq k_0$. Damit folgt, dass gilt: $\alpha_k(x)\in (\alpha(x)-\varepsilon, \alpha(x)+\varepsilon)$ für $k \geq k_0$. 
 	Damit: $\alpha_k(x)\rightarrow \alpha(x)$.\\
-	Nun "$\impliedby$": Sei $U$ eine offene Umgebung von $\alpha_k$. Dann lässt sich $U$ schreiben als endlichen Schnitt über Urbilder von Umgebungen von $\alpha(i)$: $U=\cap_{j=1}^n \pi_j^{-1}(B_j)$, 
-	wobei gelten muss, dass $B_j$ eine Umgebung von $\alpha(j)$ ist. Dann gibt es insbesondere $k_1,...,k_n\in\N$, sodass für alle $k \geq k_j$ gilt, dass $\alpha_k(j) \in B_j$ ist, wobei 
-	$j\in \{1,...,n\}$, da die Funktionen punktweise konvergieren. Setze $k_0=\max\{k_1,...,k_n\}$. Dann gilt für alle $k\geq k_0$ und $j \in \{1,...,n\}$, dass $\alpha_k(j) \in B_j$. Insbesondere
+	Nun "$\impliedby$": Sei $U$ eine offene Umgebung von $\alpha$. Da die Urbilder von Projektionen eine Subbasis bilden, lässt sich $U$ schreiben beliebige Vereinigung über endliche Schnitte von Urbilder 
+	von Umgebungen von $\alpha(i)$ mit $i\in [0,1]$. Es genügt jedoch dies für die Schnitte von Urbildern zu zeigen, da beim Vereinigen die Mengen nur größer werden. Sei also  $U=\cap_{j=1}^n 
+	\pi_j^{-1}(B_j)$, wobei gelten muss, dass $B_j$ eine Umgebung von beliebigen $\alpha(i_j)$ mit $i_j\in [0,1]$ für $j=1,...,n$ ist. Da $\alpha_n\rightarrow \alpha$ punktweise konvergiert, gibt
+	insbesondere $k_1,...,k_n\in\N$, sodass für alle $k \geq k_j$ gilt, dass $\alpha_k(i_j) \in B_j$ ist, wobei 
+	$j\in \{1,...,n\}$. Setze $k_0=\max\{k_1,...,k_n\}$. Dann gilt für alle $k\geq k_0$ und $j \in \{1,...,n\}$, dass $\alpha_k(i_j) \in B_j$. Damit gilt: $\alpha_k\in \pi_j^{-1}(B_j)$. Insbesondere
 	gilt auch, dass $\alpha_k \in U$ ist per Konstruktion. Damit liegen unendlich viele Folgenglieder in dieser Menge. Damit: $\alpha_k\rightarrow \alpha$.
 \end{proof}
 \begin{theorem}
-	Das überabzählbare Einheitsintervall ist folgenkompakt.
+	Das überabzählbare Einheitsintervall ist nicht folgenkompakt.
 \end{theorem}
 \begin{proof}
 	Wir konstruieren nun eine Folge, die keine konvergente Teilfolge hat. Definiere dazu die folgende Folge:
